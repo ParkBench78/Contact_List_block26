@@ -8,5 +8,3 @@ export default function App() {
     </>
   );
 }
-
-// https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users
