@@ -1,4 +1,4 @@
-export default function ContactRow({ setSelectedContactId, contact }) {
+export default function ContactRow({ contact, setSelectedContactId }) {
   //...component logic
   return (
     <tr

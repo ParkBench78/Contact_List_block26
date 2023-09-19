@@ -1,14 +1,42 @@
-import React from "react";
+// import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import ContactRow from "./ContactRow";
 
-const dummyContacts = [
-  { id: 1, name: "R2-D2", phone: "222-222-2222", email: "r2d2@droids.com" },
-  { id: 2, name: "C-3PO", phone: "333-333-3333", email: "c3po@droids.com" },
-  { id: 3, name: "BB-8", phone: "888-888-8888", email: "bb8@droids.com" },
-];
+export default function SelectedContact({
+  selectedContactId,
+  setSelectedContactId,
+}) {
+  const [contact, setContact] = useState(null);
+  console.log(selectedContactId);
+  useEffect(() => {
+    async function getContact() {
+      try {
+        const response = await fetch(
+          `https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/${selectedContactId}`
+        );
+        const result = await response.json();
+        setContact(result);
+        console.log(`fetch by Id result: ${contact.name}`);
+      } catch (error) {
+        console.log(`contactId fetch error ${error}`);
+      }
+    }
+    getContact();
+  }, []);
 
-export default function SelectedContact() {
-  const [contacts, setContacts] = useState(dummyContacts);
+  const handleClick = () => setSelectedContactId(null);
+  return (
+    <>
+      {contact && (
+        <>
+          <h2>{contact.name} </h2>
+          <h3>{contact.email}</h3>
+          <h3>{contact.phone}</h3>
+          <h3>{contact.website}</h3>
+        </>
+      )}
+      <button onClick={handleClick}>Go Back to List</button>
+    </>
+  );
 }
